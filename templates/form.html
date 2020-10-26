@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if flag == 0 %}
+<div class="container">
+    <form method="POST" enctype="multipart/form-data" action="/upload"> 
+
+      <div class="form-group">
+        <label for="title">Photo Courtesy</label>
+        <input type="text" name="pc" id="pc" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <label for="author">Location</label>
+        <input type="text" name="location" id="location" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <label for="publishedDate">Date</label>
+        <input type="text" name="date" id="date" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" name="image" id="image" class="form-control"/>
+      </div>
+
+      <div class="form-group hidden">
+        <label for="imageUrl">Cover Image URL</label>
+        <input type="text" name="imageUrl" id="imageUrl" class="form-control"/>
+      </div>
+
+      <button type="submit" class="btn btn-success">Save</button>
+    </form>
+
+    {% else %}
+<form method="POST" enctype="multipart/form-data" action="/update?id={{ image_entities.blob_name }}">
+
+    <div class="form-group">
+        <label for="title">Category</label>
+        <select name="kind" id="kind" class="form-control">
+            <option value="Animals" {% if kind == "Animals" %} selected="selected"{% endif %}>Animals</option>
+            <option value="Person" {% if kind == "Person" %} selected="selected"{% endif %}>Person</option>
+            <option value="Flowers" {% if kind == "Flowers" %} selected="selected"{% endif %}>Flowers</option>
+            <option value="Other" {% if kind == "Others" %} selected="selected"{% endif %}>Others</option>
+        </select>
+      </div>
+
+    <div class="form-group">
+        <label for="title">Photo Courtesy</label>
+        <input type="text" name="pc" value= "{{ image_entities.photo_courtesy }}" id="pc" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <label for="author">Location</label>
+        <input type="text" name="location" value= "{{ image_entities.location }}" id="location" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <label for="publishedDate">Date</label>
+        <input type="text" name="date" value= "{{ image_entities.timestamp }}" id="date" class="form-control"/>
+      </div>
+
+      <div class="form-group hidden">
+        <label for="imageUrl">Cover Image URL</label>
+        <input type="text" name="imageUrl" id="imageUrl" class="form-control"/>
+      </div>
+
+      <button type="submit" class="btn btn-success">Save</button>
+    </form>
+</div>
+    {% endif  %}
+{% endblock %}

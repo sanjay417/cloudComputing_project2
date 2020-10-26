@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Photos</h3>
+<a href="/add" class="btn btn-success btn-sm">
+  <i class="glyphicon glyphicon-plus"></i>
+  Add Photos
+</a>
+
+{% for image_entities in image_entities %}
+<div class="media">
+    <div class="media-left">
+      {% if image_entities.image_public_url %}
+        <img src="{{image_entities.image_public_url}}" width=200 height=200>
+      {% else %}
+        <img src="https://storage.googleapis.com/cloud-training/CP100/Bookshelf/bookplaceholder.jpg">
+      {% endif %}
+    </div>
+    <div class="media-body">
+      <h4>{{image_entities.location}}</h4>
+      <p>{{image_entities.timestamp}}</p>
+    </div>
+<div class="btn-group">
+  <a href="/edit?name={{ image_entities.blob_name }}" class="btn btn-primary btn-sm">
+    <i class="glyphicon glyphicon-edit"></i>
+    Edit
+  </a>
+  <a href="/delete?name={{ image_entities.blob_name }}" class="btn btn-danger btn-sm">
+    <i class="glyphicon glyphicon-trash"></i>
+    Delete
+  </a>
+</div>
+
+</div>
+{% else %}
+<p>No Photos found</p>
+{% endfor %}
+
+{% if next_page_token %}
+<nav>
+  <ul class="pager">
+    <li><a href="?page_token={{next_page_token}}">More</a></li>
+  </ul>
+</nav>
+{% endif %}
+
+{% endblock %}
